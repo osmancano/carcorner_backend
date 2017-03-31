@@ -19,6 +19,14 @@ public class TempCar {
     private String latitude;
     private String longitude;
 
+    public TempCar(){}
+
+    public TempCar(Long make, Long model, Double pricePerDay, Long ownerId){
+        this.make = make;
+        this.model = model;
+        this.pricePerDay = pricePerDay;
+        this.ownerId = ownerId;
+    }
 
     public Long getId() {
         return id;

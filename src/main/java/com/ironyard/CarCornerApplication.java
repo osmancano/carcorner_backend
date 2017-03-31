@@ -27,10 +27,10 @@ public class CarCornerApplication {
 	@Bean
 	public Docket movieApi() {
 		return new Docket(DocumentationType.SWAGGER_2)
-				.groupName("movie-api")
+				.groupName("cars-opened-api")
 				.apiInfo(apiInfo())
 				.select()
-				.paths(regex("/rest/*.*"))
+				.paths(regex("/open/*.*"))
 				.build()
 				.globalOperationParameters(
 						newArrayList(new ParameterBuilder()
@@ -46,19 +46,19 @@ public class CarCornerApplication {
 	@Bean
 	public Docket CarsApi() {
 		return new Docket(DocumentationType.SWAGGER_2)
-				.groupName("Cars-api")
+				.groupName("Cars-secured-api")
 				.apiInfo(apiInfo())
 				.select()
-				.paths(regex("/open/*.*"))
-				.build();
-				/*.globalOperationParameters(
+				.paths(regex("/secure/*.*"))
+				.build()
+				.globalOperationParameters(
 						newArrayList(new ParameterBuilder()
-								.name("x-authorization-key")
+								.name("x-access-token")
 								.description("API Authorization Key")
 								.modelRef(new ModelRef("string"))
 								.parameterType("header")
 								.required(true)
-								.build()));*/
+								.build()));
 
 	}
 

@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by wailm.yousif on 2/21/17.
@@ -56,6 +57,35 @@ public class RestUsers
     public CarUser logout() throws Exception {
         CarUser carUser = new CarUser();
         return carUser;
+    }
+
+    @RequestMapping(path = "/secure/users/{userid}/favourites/add", method = RequestMethod.POST)
+    public Car addFavourite(@PathVariable Long userid, @RequestBody TempCar tempCar) throws Exception {
+        Car car = carRepo.findOne(tempCar.getId());
+        CarUser carUser = carUserRepo.findOne(userid);
+        if(!carUser.getFavourites().contains(car)) {
+            carUser.getFavourites().add(car);
+            carUserRepo.save(carUser);
+        }
+        return car;
+    }
+
+    @RequestMapping(path = "/secure/users/{userid}/favourites/remove", method = RequestMethod.POST)
+    public Car removeFavourite(@PathVariable Long userid, @RequestBody TempCar tempCar) throws Exception {
+        Car car = carRepo.findOne(tempCar.getId());
+        CarUser carUser = carUserRepo.findOne(userid);
+        if(carUser.getFavourites().contains(car)){
+            carUser.getFavourites().remove(car);
+            carUserRepo.save(carUser);
+        }
+        return car;
+    }
+
+    @RequestMapping(path = "/open/users/{userid}/favourites", method = RequestMethod.GET)
+    public List<Car> removeFavourite(@PathVariable Long userid) throws Exception {
+        CarUser carUser = carUserRepo.findOne(userid);
+        List<Car> favourites = carUser.getFavourites();
+        return favourites;
     }
 
     @RequestMapping(path = "/open/unauthorized", method = RequestMethod.GET)

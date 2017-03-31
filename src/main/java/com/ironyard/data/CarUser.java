@@ -23,6 +23,9 @@ public class CarUser {
     private String phone;
     private String address;
     private String image;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private List<Car> favourites;
 
     public CarUser(){}
 
@@ -97,5 +100,13 @@ public class CarUser {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public List<Car> getFavourites() {
+        return favourites;
+    }
+
+    public void setFavourites(List<Car> favourites) {
+        this.favourites = favourites;
     }
 }
